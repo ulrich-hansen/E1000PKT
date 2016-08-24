@@ -8,4 +8,9 @@ It can be found at: https://downloadcenter.intel.com/download/12586
 
 According to the README.TXT it is Open Source (GPLv2)
 
-To make it easier to install and uninstall this driver in FreeDOS 1.2, I have put everything in the format, that the new FreeDOS installer FDNPKG will understand. The driver will install into C:\FDOS\DRIVERS\E1000PKT.
+To make it easier to install and uninstall this driver in FreeDOS 1.2, I have put everything in the format, that the new FreeDOS installer FDNPKG will understand. 
+
+The driver is packaged into E1000PKT.ZIP and can be downloaded from:
+
+
+The driver will install into C:\FDOS\DRIVERS\E1000PKT.
