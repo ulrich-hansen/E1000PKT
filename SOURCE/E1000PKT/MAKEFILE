@@ -1,0 +1,80 @@
+#/*******************************************************************************
+#*                                                                              *
+#*                I N T E L   P R O P R I E T A R Y                             *
+#*                                                                              *
+#*       COPYRIGHT (c)  2001 - 2002  INTEL  CORPORATION.                        *
+#*   ALL RIGHTS RESERVED.   NO PART OF THIS PROGRAM OR PUBLICATION              *
+#*   MAY BE REPRODUCED,  TRANSMITTED,  TRANSCRIBED,  STORED  IN  A              *
+#*   RETRIEVAL SYSTEM, OR TRANSLATED INTO ANY LANGUAGE OR COMPUTER              *
+#*   LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC, MECHANICAL,              *
+#*   MAGNETIC,  OPTICAL,  CHEMICAL, MANUAL, OR OTHERWISE,  WITHOUT              *
+#*   THE PRIOR WRITTEN PERMISSION OF :                                          *
+#*                                                                              *
+#*                      INTEL  CORPORATION                                      *
+#*                                                                              *
+#*                   2200 MISSION COLLEGE BLVD                                  *
+#*                                                                              *
+#*             SANTA  CLARA,  CALIFORNIA  95052-8119                            *
+#*                                                                              *
+#********************************************************************************/
+
+#/*******************************************************************************
+#*                                                                              *
+#* INTEL CORPORATION PROPRIETARY INFORMATION                                    *
+#*                                                                              *
+#* This software is supplied under the terms of a license agreement with Intel  *
+#* Corporation and may not be copied nor disclosed except in accordance with    *
+#* the terms of that agreement.                                                 *
+#********************************************************************************/
+
+# Author:       Sergey Samylin 
+# packet driver build file
+
+AS=ml.exe
+ASOPTS=/AT /c /Cp /Fl /WX
+LD=tlink.exe
+LDOPTS=/t /3 /m
+OBJ=driver.obj init.obj eeprom.obj\
+    phy.obj timer.obj
+LST=driver.lst init.lst eeprom.lst\
+    phy.lst timer.lst
+RM=$(OBJ) e1000pkt.com e1000pkt.map
+
+!ifdef LIST
+ASOPTS=/Fl $(ASOPTS)
+RM=$(LST) $(RM)
+!endif
+
+!ifdef DEBUG
+ASOPTS=/DDEBUG=$(DEBUG) $(ASOPTS)
+!endif
+
+!ifdef DLEVEL
+ASOPTS=/DDLEVEL=$(DLEVEL) $(ASOPTS)
+!endif 
+
+
+
+all: e1000pkt.com 
+
+e1000pkt.com: $(OBJ)
+        $(LD) $(LDOPTS) $(OBJ) ,e1000pkt.com;
+
+driver.obj: driver.asm segms.inc def.inc 82544.inc eeprom.inc message.inc
+        $(AS) $(ASOPTS) driver.asm
+
+init.obj:   init.asm def.inc segms.inc 82544.inc pci.inc
+        $(AS) $(ASOPTS) init.asm
+
+eeprom.obj: eeprom.asm 82544.inc def.inc segms.inc eeprom.inc
+        $(AS) $(ASOPTS) eeprom.asm
+
+phy.obj:  phy.asm def.inc phy.inc segms.inc 82544.inc
+        $(AS) $(ASOPTS) phy.asm
+
+timer.obj: timer.asm segms.inc
+        $(AS) $(ASOPTS) timer.asm
+
+
+clean:
+        del $(RM)
