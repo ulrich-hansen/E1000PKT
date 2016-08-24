@@ -1,5 +1,5 @@
 # E1000PKT
-The Intel Gigabit Packet Driver (GPLv2) in an installable format for FreeDOS 1.2
+The Intel Gigabit Packet Driver (GPLv2) for DOS, packaged into an installable format for FreeDOS 1.2
 
 intel provides a DOS packet driver for the Intel(R) PRO/1000 Family of Desktop and Server adapters, specifically the Intel 82544, 82540, 82545, 82541, and 82547 based Ethernet controllers.
 
